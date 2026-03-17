@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"errors"
 	"net/http"
 	"reflect"
 	"testing"
@@ -16,9 +17,13 @@ func TestGetApiKey(t *testing.T) {
 	goodHeader := http.Header{}
 	goodHeader.Add("Authorization", "ApiKey 01")
 
+	badHeader := http.Header{}
+	badHeader.Add("Authorization", "Winchester")
+
 	tests := []testCase{
 		{header: http.Header{}, want: "", wantErr: ErrNoAuthHeaderIncluded},
 		{header: goodHeader, want: "01", wantErr: nil},
+		{header: badHeader, want: "", wantErr: errors.New("malformed authorization header")},
 	}
 
 	for _, test := range tests {
