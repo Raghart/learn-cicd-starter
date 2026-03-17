@@ -15,10 +15,10 @@ func TestGetApiKey(t *testing.T) {
 	}
 
 	goodHeader := http.Header{}
-	goodHeader.Add("Authorization", "ApiKey 01")
+	goodHeader.Set("Authorization", "ApiKey 01")
 
 	badHeader := http.Header{}
-	badHeader.Add("Authorization", "Winchester")
+	badHeader.Set("Authorization", "Winchester")
 
 	tests := []testCase{
 		{header: http.Header{}, want: "", wantErr: ErrNoAuthHeaderIncluded},
